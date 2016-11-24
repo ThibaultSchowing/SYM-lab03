@@ -2,6 +2,7 @@ package ch.heig_vd.lab3_sym;
 
 import android.app.Activity;
 import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.nfc.NdefMessage;
@@ -104,11 +105,30 @@ public class MainActivity extends AppCompatActivity {
                 String password = txt_passwd.getText().toString();
                 String nfc = txt_nfc.getText().toString();
                 Boolean fastloginChecked = fastlogin.isChecked();
+                Boolean authorized = false;
 
+                if(fastloginChecked && username.equals("a") && nfc.contains("test")){
+                    authorized = true;
+                }
+                else if(!fastloginChecked && username.equals("a") && password.equals("a") && nfc.contains("test")){
+                    authorized = true;
+                }
+                else{
+                    authorized = false;
+                }
 
+                if(authorized){
+                    Intent intent = new Intent(MainActivity.this, Wellcome.class);
+                    startActivity(intent);
+                }
+                else{
+                    CharSequence text = "GO AWAY !!";
+                    int duration = Toast.LENGTH_SHORT;
+                    Context context = getApplicationContext();
+                    Toast toast = Toast.makeText(context, text, duration);
+                    toast.show();
+                }
 
-                Intent intent = new Intent(MainActivity.this, Wellcome.class);
-                startActivity(intent);
             }
         });
 
