@@ -13,16 +13,13 @@ import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import org.w3c.dom.Text;
-
 import java.io.UnsupportedEncodingException;
 import java.util.Arrays;
-
-import static ch.heig_vd.lab3_sym.MainActivity.TAG;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -33,8 +30,11 @@ public class MainActivity extends AppCompatActivity {
     private TextView txt_username = null;
     private TextView txt_passwd = null;
     private TextView txt_nfc = null;
-    private TextView mTextView = null;
+    private TextView nfcState = null;
+    private TextView NFCinfo = null;
     private Button loginBtn = null;
+    private Button barecode = null;
+    private Button ibeacon = null;
 
     // NFC Adapter
     private NfcAdapter mNfcAdapter = null;
@@ -44,11 +44,20 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Button loginBtn = (Button) findViewById(R.id.btn_login);
+        loginBtn = (Button) findViewById(R.id.btn_login);
+        barecode = (Button) findViewById(R.id.bareCode);
+        ibeacon = (Button) findViewById(R.id.ibeacon);
         txt_username = (TextView) findViewById(R.id.txt_username);
         txt_passwd = (TextView) findViewById(R.id.txt_passwd);
+
+        // Champ du formulaire ou la donnée du nfc sera entrée
         txt_nfc = (TextView) findViewById(R.id.txt_nfc);
-        mTextView = (TextView) findViewById(R.id.textView_explanation);
+
+        // Text récuupéré du nfc
+        NFCinfo = (TextView) findViewById(R.id.NFCinfo);
+
+        // INfo sur l'état du NFC (activé ou pas)
+        nfcState = (TextView) findViewById(R.id.textView_explanation);
 
         mNfcAdapter = NfcAdapter.getDefaultAdapter(this);
 
@@ -61,14 +70,29 @@ public class MainActivity extends AppCompatActivity {
         }
 
         if (!mNfcAdapter.isEnabled()) {
-            mTextView.setText("NFC is disabled.");
+            nfcState.setText("NFC is disabled.");
         } else {
-            mTextView.setText(R.string.explanation);
+            nfcState.setText(R.string.explanation);
         }
 
         handleIntent(getIntent());
 
+        // Pour lancer les deux autres activités du labo
+        barecode.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, ch.heig_vd.lab3_sym.Barecode.class);
+                startActivity(intent);
+            }
+        });
 
+        ibeacon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, ch.heig_vd.lab3_sym.Ibeacon.class);
+                startActivity(intent);
+            }
+        });
 
     }
 
@@ -161,7 +185,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /**
-     * @param activity The corresponding {@link BaseActivity} requesting to stop the foreground dispatch.
+     * @param activity The corresponding {BaseActivity} requesting to stop the foreground dispatch.
      * @param adapter The {@link NfcAdapter} used for the foreground dispatch.
      */
     public static void stopForegroundDispatch(final Activity activity, NfcAdapter adapter) {
@@ -189,17 +213,21 @@ public class MainActivity extends AppCompatActivity {
             NdefMessage ndefMessage = ndef.getCachedNdefMessage();
 
             NdefRecord[] records = ndefMessage.getRecords();
+            String resultats = "";
             for (NdefRecord ndefRecord : records) {
                 if (ndefRecord.getTnf() == NdefRecord.TNF_WELL_KNOWN && Arrays.equals(ndefRecord.getType(), NdefRecord.RTD_TEXT)) {
                     try {
-                        return readText(ndefRecord);
+                        // Concaténe les différents tags
+                        //return readText(ndefRecord);
+                        resultats += readText(ndefRecord);
                     } catch (UnsupportedEncodingException e) {
                         Log.e(TAG, "Unsupported Encoding", e);
                     }
                 }
             }
 
-            return null;
+            //return null;
+            return resultats;
         }
 
         private String readText(NdefRecord record) throws UnsupportedEncodingException {
@@ -231,7 +259,7 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(String result) {
             if (result != null) {
-                mTextView.setText("Read content: " + result);
+                NFCinfo.setText("Read content: " + result);
                 // Todo remplire le champ NFC
             }
         }

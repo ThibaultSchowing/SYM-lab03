@@ -2,7 +2,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="ch.heig_vd.lab3_sym">
 
-
     <uses-permission android:name="android.permission.NFC" />
 
     <uses-feature
@@ -21,7 +20,6 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
             <intent-filter>
                 <action android:name="android.nfc.action.NDEF_DISCOVERED" />
 
@@ -33,9 +31,9 @@
             <meta-data
                 android:name="android.nfc.action.TECH_DISCOVERED"
                 android:resource="@xml/nfc_tech_filter" />
-
         </activity>
+        <activity android:name=".Barecode" />
+        <activity android:name=".Ibeacon"></activity>
     </application>
-
 
 </manifest>
