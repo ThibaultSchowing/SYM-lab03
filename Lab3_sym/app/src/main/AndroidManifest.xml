@@ -33,7 +33,8 @@
                 android:resource="@xml/nfc_tech_filter" />
         </activity>
         <activity android:name=".Barecode" />
-        <activity android:name=".Ibeacon"></activity>
+        <activity android:name=".Ibeacon" />
+        <activity android:name=".Wellcome"></activity>
     </application>
 
 </manifest>

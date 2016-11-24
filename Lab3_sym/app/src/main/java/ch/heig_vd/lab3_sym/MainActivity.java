@@ -15,6 +15,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -35,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
     private Button loginBtn = null;
     private Button barecode = null;
     private Button ibeacon = null;
+    private CheckBox fastlogin = null;
 
     // NFC Adapter
     private NfcAdapter mNfcAdapter = null;
@@ -44,6 +46,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        fastlogin = (CheckBox) findViewById(R.id.FastLogin);
         loginBtn = (Button) findViewById(R.id.btn_login);
         barecode = (Button) findViewById(R.id.bareCode);
         ibeacon = (Button) findViewById(R.id.ibeacon);
@@ -90,6 +93,21 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(MainActivity.this, ch.heig_vd.lab3_sym.Ibeacon.class);
+                startActivity(intent);
+            }
+        });
+
+        loginBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String username = txt_username.getText().toString();
+                String password = txt_passwd.getText().toString();
+                String nfc = txt_nfc.getText().toString();
+                Boolean fastloginChecked = fastlogin.isChecked();
+
+
+
+                Intent intent = new Intent(MainActivity.this, Wellcome.class);
                 startActivity(intent);
             }
         });
@@ -270,6 +288,7 @@ public class MainActivity extends AppCompatActivity {
             if (result != null) {
                 NFCinfo.setText("Read content: " + result);
                 // Todo remplire le champ NFC
+                txt_nfc.setText(result);
             }
         }
     }

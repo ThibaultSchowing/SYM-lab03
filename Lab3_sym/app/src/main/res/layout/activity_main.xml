@@ -19,20 +19,6 @@
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:inputType="textPersonName"
-        android:text="Username"
-        android:ems="10"
-        android:layout_below="@+id/textView_explanation"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="79dp"
-        android:id="@+id/txt_username"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
-
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:inputType="textPassword"
         android:ems="10"
         android:layout_below="@+id/txt_username"
@@ -41,8 +27,54 @@
         android:layout_marginTop="57dp"
         android:id="@+id/txt_passwd"
         android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:text="Password" />
+        android:layout_alignParentEnd="true" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:ems="10"
+        android:layout_marginTop="114dp"
+        android:id="@+id/txt_username"
+        android:layout_below="@+id/textView_explanation"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <CheckBox
+        android:text="FastLogin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/FastLogin"
+        android:layout_below="@+id/textView_explanation"
+        android:layout_marginTop="52dp" />
+
+    <TextView
+        android:text="NFCinformations"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/NFCinfo"
+        android:layout_above="@+id/txt_username"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+    <TextView
+        android:text="Password"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView6"
+        android:layout_below="@+id/txt_username"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="30dp" />
+
+    <TextView
+        android:text="Username"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView5"
+        android:layout_below="@+id/FastLogin"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 
     <EditText
         android:layout_width="wrap_content"
@@ -50,66 +82,42 @@
         android:inputType="textPersonName"
         android:text="NFC ID"
         android:ems="10"
+        android:layout_marginTop="11dp"
+        android:id="@+id/txt_nfc"
         android:layout_below="@+id/txt_passwd"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="60dp"
-        android:id="@+id/txt_nfc"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignParentStart="true" />
 
     <Button
         android:text="Login"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:id="@+id/btn_login"
         android:layout_below="@+id/txt_nfc"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="53dp"
-        android:id="@+id/btn_login"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true" />
-
-    <Button
-        android:text="BareCode"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/btn_login"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="52dp"
-        android:id="@+id/bareCode" />
 
     <Button
         android:text="IBeacon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/bareCode"
+        android:id="@+id/ibeacon"
+        android:layout_below="@+id/btn_login"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="46dp"
-        android:id="@+id/ibeacon" />
+        android:layout_marginTop="16dp" />
 
-    <CheckBox
-        android:text="FastLogin"
+    <Button
+        android:text="BareCode"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/FastLogin"
-        android:layout_above="@+id/txt_passwd"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginBottom="34dp" />
-
-    <TextView
-        android:text="NFCinformations"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/NFCinfo"
-        android:layout_marginRight="31dp"
-        android:layout_marginEnd="31dp"
-        android:layout_above="@+id/FastLogin"
+        android:id="@+id/bareCode"
+        android:layout_alignBaseline="@+id/ibeacon"
+        android:layout_alignBottom="@+id/ibeacon"
         android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginBottom="11dp" />
+        android:layout_alignParentEnd="true" />
 
 </RelativeLayout>
