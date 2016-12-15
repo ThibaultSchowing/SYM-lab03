@@ -4,6 +4,10 @@
 
     <uses-permission android:name="android.permission.NFC" />
 
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+
     <uses-feature
         android:name="android.hardware.nfc"
         android:required="true" />
@@ -36,5 +40,25 @@
         <activity android:name=".Ibeacon" />
         <activity android:name=".Wellcome"></activity>
     </application>
+
+    <service
+        android:name="org.altbeacon.beacon.service.BeaconService"
+        android:enabled="true"
+        android:exported="true"
+        android:isolatedProcess="false"
+        android:label="beacon" >
+    </service>
+    <service
+        android:name="org.altbeacon.beacon.BeaconIntentProcessor"
+        android:enabled="true" >
+    </service>
+
+    <receiver android:name="org.altbeacon.beacon.startup.StartupBroadcastReceiver" >
+        <intent-filter>
+            <action android:name="android.intent.action.BOOT_COMPLETED" />
+            <action android:name="android.intent.action.ACTION_POWER_CONNECTED" />
+            <action android:name="android.intent.action.ACTION_POWER_DISCONNECTED" />
+        </intent-filter>
+    </receiver>
 
 </manifest>
