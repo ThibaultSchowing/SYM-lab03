@@ -1,15 +1,22 @@
 package ch.heig_vd.lab3_sym;
 
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.format.DateUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.w3c.dom.Text;
 
-public class Wellcome extends AppCompatActivity {
+import java.sql.Timestamp;
+
+public class Wellcome extends AbstractNFCActivity {
 
     private Button btn_secret = null;
     private Button btn_conf = null;
@@ -18,21 +25,26 @@ public class Wellcome extends AppCompatActivity {
     private TextView txt_infos = null;
     private TextView txt_welcome = null;
 
-    //Milisecondes max avant déconnexion (début du countdown)
-    private final int maxMs = 60000;
-    private long seconds = 0;
 
     // Niveaux de sécurité
     private final String AUTH_MAX = "AUTHENTICATE_MAX";
     private final String AUTH_MED = "AUTHENTICATE_MED";
     private final String AUTH_MIN = "AUTHENTICATE_MIN";
+    private final String AUTH_NULL = "AUTHENTICATE_NULL";
+
+    private final int AUTH_MAX_TIME = 10000;
+    private final int AUTH_MED_TIME = 20000;
+    private final int AUTH_MIN_TIME = 30000;
+
+    CharSequence text1 = "Secret information ! Valdor au lait cru AOC ROHMILCH !!";
+    CharSequence text2 = "Confidential information ! Fontaine à Absinth BORDEL !!";
+    CharSequence text3 = "Information ! Inscrivez-vous à la R.A.C.L.E.T.T.E. !!";
+
+
     private String currentLevel = "";
 
-    private final String secret = "Secret information: I love cake !";
-    private final String conf = "Confidential information: You're beautiful !";
-    private final String info = "Informational information: Beer !";
 
-    private CountDownTimer timer = null;
+    private int clickTime = 0, connexionTime = 0, diffTime = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,47 +58,36 @@ public class Wellcome extends AppCompatActivity {
         txt_infos = (TextView) findViewById(R.id.txt_infos);
         txt_welcome = (TextView) findViewById(R.id.txt_welcome);
 
-        // Secondes totales pour accéder "l'information"
+
+        connexionTime = (int) (System.currentTimeMillis());
+
+        currentLevel = calculateAuthLevel();
+        txt_welcome.setText("Auth level: " + currentLevel);
 
 
 
-        //TODO démarer un timer, à la fin du compteur retourner au login
-
-        timer = new CountDownTimer(maxMs, 1000) {
-
-            public void onTick(long millisUntilFinished) {
-                seconds = millisUntilFinished/1000;
-
-
-                // Le tiers le plus grand du pool de seconde = AuthHigh, le tiers du milieu = medium et le dernier tiers = low
-                if(seconds >= ((maxMs/1000)/3)*2){
-                    currentLevel = AUTH_MAX;
-                }
-                else if( seconds < ((maxMs/1000)/3)*2 && seconds >= ((maxMs/1000)/3)){
-                    currentLevel = AUTH_MED;
-                }
-                else if (seconds < ((maxMs/1000)/3)){
-                    currentLevel = AUTH_MIN;
-                }
-
-                txt_welcome.setText("Seconds remaining: " + seconds + " - " + currentLevel);
-
-            }
-
-            public void onFinish() {
-                txt_welcome.setText("done!");
-            }
-        }.start();
-
-
-
-
-        //On click listeners - choix de l'information à accéder
 
         btn_secret.setOnClickListener(new View.OnClickListener(){
 
             @Override
             public void onClick(View view) {
+                currentLevel = calculateAuthLevel();
+                Context context = getApplicationContext();
+                CharSequence text = "Please reauthenticate !";
+                int duration = Toast.LENGTH_SHORT;
+
+                Toast toast = Toast.makeText(context, text, duration);
+                if(currentLevel == AUTH_MAX){
+                    try {
+                        getAppropriateInfo(currentLevel);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+                else{
+                    txt_welcome.setText("Auth level: " + currentLevel);
+                    toast.show();
+                }
 
             }
         });
@@ -95,7 +96,23 @@ public class Wellcome extends AppCompatActivity {
 
             @Override
             public void onClick(View view) {
+                currentLevel = calculateAuthLevel();
+                Context context = getApplicationContext();
+                CharSequence text = "Please reauthenticate !";
+                int duration = Toast.LENGTH_SHORT;
 
+                Toast toast = Toast.makeText(context, text, duration);
+                if(currentLevel == AUTH_MED || currentLevel == AUTH_MAX){
+                    try {
+                        getAppropriateInfo(AUTH_MED);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+                else{
+                    txt_welcome.setText("Auth level: " + currentLevel);
+                    toast.show();
+                }
             }
         });
 
@@ -103,9 +120,116 @@ public class Wellcome extends AppCompatActivity {
 
             @Override
             public void onClick(View view) {
+                currentLevel = calculateAuthLevel();
+                Context context = getApplicationContext();
+                CharSequence text = "Please reauthenticate !";
+                int duration = Toast.LENGTH_SHORT;
 
+                Toast toast = Toast.makeText(context, text, duration);
+                if(currentLevel == AUTH_MIN || currentLevel == AUTH_MED || currentLevel == AUTH_MAX){
+                    try {
+                        getAppropriateInfo(AUTH_MIN);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+                else{
+                    txt_welcome.setText("Auth level: " + currentLevel);
+                    toast.show();
+                }
             }
         });
 
     }
+
+    @Override
+    protected void readTag(String tag) {
+        if(tag.contains("test")){
+            connexionTime = (int) (System.currentTimeMillis());
+            currentLevel = calculateAuthLevel();
+            txt_welcome.setText("Auth level: " + currentLevel);
+        }
+    }
+
+    protected String calculateAuthLevel(){
+
+        clickTime = (int) (System.currentTimeMillis());
+        diffTime = clickTime - connexionTime;
+
+        if(diffTime >= 0 && diffTime <= AUTH_MAX_TIME){
+            return AUTH_MAX;
+        }
+        else if(diffTime > AUTH_MAX_TIME && diffTime <= AUTH_MED_TIME){
+            return AUTH_MED;
+        }
+        else if(diffTime > AUTH_MED_TIME && diffTime <= AUTH_MIN_TIME){
+            return AUTH_MIN;
+        }
+        else {
+            //else if(diffTime > AUTH_MIN_TIME){
+            return AUTH_NULL;
+        }
+    }
+
+    protected void getAppropriateInfo(String level) throws InterruptedException {
+
+        Context context = getApplicationContext();
+        int duration = Toast.LENGTH_SHORT;
+
+
+        switch (level){
+            case AUTH_MAX:
+                txt_welcome.setText("Auth level: " + level);
+
+                //toast1.show();
+
+                AlertDialog alertDialog = new AlertDialog.Builder(this).create();
+                alertDialog.setTitle("Top Secret");
+                alertDialog.setMessage(text1);
+                alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        });
+                alertDialog.show();
+
+                break;
+            case AUTH_MED:
+                txt_welcome.setText("Auth level: " + level);
+
+                //toast2.show();
+                AlertDialog alertDialog2 = new AlertDialog.Builder(this).create();
+                alertDialog2.setTitle("Confidential");
+                alertDialog2.setMessage(text2);
+                alertDialog2.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        });
+                alertDialog2.show();
+
+                break;
+            case AUTH_MIN:
+                txt_welcome.setText("Auth level: " + level);
+
+                //toast3.show();
+                AlertDialog alertDialog3 = new AlertDialog.Builder(this).create();
+                alertDialog3.setTitle("Information");
+                alertDialog3.setMessage(text3);
+                alertDialog3.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        });
+                alertDialog3.show();
+
+                break;
+            case AUTH_NULL:
+                this.finish();
+        }
+    }
+
 }
