@@ -20,7 +20,6 @@ public class Barecode extends AppCompatActivity {
     private Button btn_conf = null;
     private Button btn_info = null;
 
-    private TextView txt_infos = null;
     private TextView txt_welcome = null;
 
 
@@ -33,11 +32,11 @@ public class Barecode extends AppCompatActivity {
     private final int AUTH_MAX_TIME = 10000;
     private final int AUTH_MED_TIME = 20000;
     private final int AUTH_MIN_TIME = 30000;
-    boolean firsttime = true ;
+    private boolean firsttime = true ;
 
-    CharSequence text1 = "Secret information ! Valdor au lait cru AOC ROHMILCH !!";
-    CharSequence text2 = "Confidential information ! Fontaine à Absinth BORDEL !!";
-    CharSequence text3 = "Information ! Inscrivez-vous à la R.A.C.L.E.T.T.E. !!";
+    private final CharSequence text1 = "Secret information ! Valdor au lait cru AOC ROHMILCH !!";
+    private final CharSequence text2 = "Confidential information ! Fontaine à Absinth BORDEL !!";
+    private final CharSequence text3 = "Information ! Inscrivez-vous à la R.A.C.L.E.T.T.E. !!";
 
 
     private String currentLevel = "";
@@ -64,7 +63,6 @@ public class Barecode extends AppCompatActivity {
         btn_info = (Button) findViewById(R.id.btn_info);
         btn_rescan = (Button) findViewById(R.id.btn_rescan);
 
-        txt_infos = (TextView) findViewById(R.id.txt_infos);
         txt_welcome = (TextView) findViewById(R.id.txt_welcome);
 
         connexionTime = (int) (System.currentTimeMillis());
@@ -168,14 +166,14 @@ public class Barecode extends AppCompatActivity {
         // else continue with any other code you need in the method
     }
 
-    protected void readTag(String tag) {
+    private void readTag(String tag) {
         if(tag != null && tag.contains("test")){
             connexionTime = (int) (System.currentTimeMillis());
             currentLevel = calculateAuthLevel();
             txt_welcome.setText("Auth level: " + currentLevel);
         }
     }
-    protected String calculateAuthLevel(){
+    private String calculateAuthLevel(){
 
         clickTime = (int) (System.currentTimeMillis());
         diffTime = clickTime - connexionTime;
@@ -195,12 +193,7 @@ public class Barecode extends AppCompatActivity {
         }
     }
 
-    protected void getAppropriateInfo(String level) throws InterruptedException {
-
-        Context context = getApplicationContext();
-        int duration = Toast.LENGTH_SHORT;
-
-
+    private void getAppropriateInfo(String level) {
         switch (level){
             case AUTH_MAX:
                 txt_welcome.setText("Auth level: " + level);

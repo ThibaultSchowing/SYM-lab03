@@ -15,10 +15,8 @@ package ch.heig_vd.lab3_sym;
  * limitations under the License.
  */
 
-import android.content.Intent;
 
-
-        import java.util.Arrays;
+import java.util.Arrays;
         import java.util.Collection;
         import java.util.Collections;
         import java.util.HashMap;

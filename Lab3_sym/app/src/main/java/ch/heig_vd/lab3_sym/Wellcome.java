@@ -3,18 +3,11 @@ package ch.heig_vd.lab3_sym;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.os.CountDownTimer;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.text.format.DateUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import org.w3c.dom.Text;
-
-import java.sql.Timestamp;
 
 public class Wellcome extends AbstractNFCActivity {
 
@@ -36,9 +29,9 @@ public class Wellcome extends AbstractNFCActivity {
     private final int AUTH_MED_TIME = 20000;
     private final int AUTH_MIN_TIME = 30000;
 
-    CharSequence text1 = "Secret information ! Valdor au lait cru AOC ROHMILCH !!";
-    CharSequence text2 = "Confidential information ! Fontaine à Absinth BORDEL !!";
-    CharSequence text3 = "Information ! Inscrivez-vous à la R.A.C.L.E.T.T.E. !!";
+    final CharSequence text1 = "Secret information ! Valdor au lait cru AOC ROHMILCH !!";
+    final CharSequence text2 = "Confidential information ! Fontaine à Absinth BORDEL !!";
+    final CharSequence text3 = "Information ! Inscrivez-vous à la R.A.C.L.E.T.T.E. !!";
 
 
     private String currentLevel = "";
@@ -172,11 +165,6 @@ public class Wellcome extends AbstractNFCActivity {
     }
 
     protected void getAppropriateInfo(String level) throws InterruptedException {
-
-        Context context = getApplicationContext();
-        int duration = Toast.LENGTH_SHORT;
-
-
         switch (level){
             case AUTH_MAX:
                 txt_welcome.setText("Auth level: " + level);

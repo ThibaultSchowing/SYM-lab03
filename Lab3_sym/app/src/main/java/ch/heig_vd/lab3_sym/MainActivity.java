@@ -1,27 +1,13 @@
 package ch.heig_vd.lab3_sym;
 
-import android.app.Activity;
-import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
-import android.nfc.NdefMessage;
-import android.nfc.NdefRecord;
-import android.nfc.NfcAdapter;
-import android.nfc.Tag;
-import android.nfc.tech.Ndef;
-import android.os.AsyncTask;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import java.io.UnsupportedEncodingException;
-import java.util.Arrays;
 
 
 public class MainActivity extends AbstractNFCActivity {
@@ -107,12 +93,8 @@ public class MainActivity extends AbstractNFCActivity {
                 if(fastloginChecked && username.equals("a") && nfc.contains("test")){
                     authorized = true;
                 }
-                else if(!fastloginChecked && username.equals("a") && password.equals("a") && nfc.contains("test")){
-                    authorized = true;
-                }
-                else{
-                    authorized = false;
-                }
+                else
+                    authorized = !fastloginChecked && username.equals("a") && password.equals("a") && nfc.contains("test");
 
                 if(authorized){
                     txt_nfc.setText("");
