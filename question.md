@@ -1,5 +1,17 @@
+# SYM laboratoire 3 janvier 2017
+## Groupe
+  * Amine Tayaa
+  * Simon Baehler
+  * Thibault Schowing
+
+
 # Fonctionnement de l'application
 
+## Informations de login
+A des fins de test et d'utilisation facilitée, le nom d'utilisateur et le mot de passe sont "a" tout simplement. Cela évite de perdre du temps pour tester l'application.
+
+## Fonctionnement général
+Avec accord du professeur, les détails comme la sauvegarde lors des changements de contexte n'est pas implémentée. Il est donc nécessaire de ne pas incliner le téléphone durant l'utilisation de l'application.
 
 # Questions
 ## Question 1
@@ -70,7 +82,7 @@ Exemple : pour festigeek on pourrait mettre un QR code sur nos affiche qui redir
 Dans le cadre d'un e-paiement l'utilisation d'un QR code pourrait etre approprié. Comme pour les utilisations ludiques la facilité d'acces et dutulisation du QR code est un plus. Pour le cas du ticketing, un QR code est obtimal, car  nous pouvons imprimer notre ticket chez nous et le faire sanner à l'entrée du concert. Cela vaut aussi pour les boarding card.
 
 ###### Financier
-Le QR code ne peut pas être recyclé mais le support sur lequel il se trouve peut l'être. L'information du QR code est donc fixe. On a donc une dualité entre le faible cout de production (on peut en faire un avec un crayon papier sur le mur de la cuisine si on veut) mais l'impossibilité de les recycler, alors qu'un Tag NFC peut être réécrit afin d'en changer son contenu mais sa fabrication nécessite des composants électronique. Afin de réduire les couts, on peut par exemple imaginer que la position du Tags sur des affiche est normalisée, et alors on pourrait mettre le Tag non pas sur chaque affiche mais dans le support de celles-ci et le poseur d'affiche aurait simplement à reprogrammer les Tags lors qu'il change les affiche. Le cout financier est alors toujours supérieur au QR code (il faut investir dans un tag alors que l'affiche est de toute manière imprimée) mais une réutilisation est quand-même possible. 
+Le QR code ne peut pas être recyclé mais le support sur lequel il se trouve peut l'être. L'information du QR code est donc fixe. On a donc une dualité entre le faible cout de production (on peut en faire un avec un crayon papier sur le mur de la cuisine si on veut) mais l'impossibilité de les recycler, alors qu'un Tag NFC peut être réécrit afin d'en changer son contenu mais sa fabrication nécessite des composants électronique. Afin de réduire les couts, on peut par exemple imaginer que la position du Tags sur des affiche est normalisée, et alors on pourrait mettre le Tag non pas sur chaque affiche mais dans le support de celles-ci et le poseur d'affiche aurait simplement à reprogrammer les Tags lors qu'il change les affiche. Le cout financier est alors toujours supérieur au QR code (il faut investir dans un tag alors que l'affiche est de toute manière imprimée) mais une réutilisation est quand-même possible.
 
 
 ## Question 2
