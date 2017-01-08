@@ -82,11 +82,7 @@ public class Barecode extends AppCompatActivity {
 
                 Toast toast = Toast.makeText(context, text, duration);
                 if(currentLevel == AUTH_MAX){
-                    try {
-                        getAppropriateInfo(currentLevel);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
+                    getAppropriateInfo(currentLevel);
                 }
                 else{
                     txt_welcome.setText("Auth level: " + currentLevel);
@@ -107,11 +103,7 @@ public class Barecode extends AppCompatActivity {
 
                 Toast toast = Toast.makeText(context, text, duration);
                 if(currentLevel == AUTH_MED || currentLevel == AUTH_MAX){
-                    try {
-                        getAppropriateInfo(AUTH_MED);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
+                    getAppropriateInfo(AUTH_MED);
                 }
                 else{
                     txt_welcome.setText("Auth level: " + currentLevel);
@@ -131,11 +123,7 @@ public class Barecode extends AppCompatActivity {
 
                 Toast toast = Toast.makeText(context, text, duration);
                 if(currentLevel == AUTH_MIN || currentLevel == AUTH_MED || currentLevel == AUTH_MAX){
-                    try {
-                        getAppropriateInfo(AUTH_MIN);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
+                    getAppropriateInfo(AUTH_MIN);
                 }
                 else{
                     txt_welcome.setText("Auth level: " + currentLevel);
