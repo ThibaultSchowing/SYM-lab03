@@ -1,3 +1,8 @@
+/*
+* Auteur : Thibault Schowing, Amine Tayaa, Simon Baehler
+* date : 8 janvier 2017
+ */
+
 package ch.heig_vd.lab3_sym;
 
 import android.app.Activity;

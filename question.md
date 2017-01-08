@@ -1,5 +1,17 @@
+# SYM laboratoire 3 janvier 2017
+## Groupe
+  * Amine Tayaa
+  * Simon Baehler
+  * Thibault Schowing
+
+
 # Fonctionnement de l'application
 
+## Informations de login
+A des fins de test et d'utilisation facilitée, le nom d'utilisateur et le mot de passe sont "a" tout simplement. Cela évite de perdre du temps pour tester l'application.
+
+## Fonctionnement général
+Avec accord du professeur, les détails comme la sauvegarde lors des changements de contexte n'est pas implémentée. Il est donc nécessaire de ne pas incliner le téléphone durant l'utilisation de l'application.
 
 # Questions
 ## Question 1
